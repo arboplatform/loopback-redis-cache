@@ -26,7 +26,7 @@ module.exports = function(Model, options) {
     Model.beforeRemote('**', function(ctx, res, next) {
         // get all find methods and search first in cache
         if((ctx.method.name.indexOf("find") !== -1 || ctx.method.name.indexOf("__get") !== -1) && client.connected){
-            if(typeof ctx.req.query.cache != 'undefined'){
+            if(typeof ctx.req.query.cache != 'undefined'||typeof ctx.req.body.cache != 'undefined'){
                 var modelName = ctx.method.sharedClass.name;
                 var cachExpire = ctx.req.query.cache;
 
@@ -61,7 +61,7 @@ module.exports = function(Model, options) {
     Model.afterRemote('**', function(ctx, res, next) {
         // get all find methods and search first in cache - if not exist save in cache
         if((ctx.method.name.indexOf("find") !== -1 || ctx.method.name.indexOf("__get") !== -1) && client.connected){
-            if(typeof ctx.req.query.cache != 'undefined'){
+            if(typeof ctx.req.query.cache != 'undefined'||typeof ctx.req.body.cache != 'undefined'){
                 var modelName = ctx.method.sharedClass.name;
                 var cachExpire = ctx.req.query.cache;
                 
