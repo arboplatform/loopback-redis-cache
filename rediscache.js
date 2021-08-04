@@ -28,7 +28,7 @@ module.exports = function(Model, options) {
         if((ctx.method.name.indexOf("find") !== -1 || ctx.method.name.indexOf("__get") !== -1) && client.connected){
             if(typeof ctx.req.query.cache != 'undefined'||typeof ctx.req.body.cache != 'undefined'){
                 var modelName = ctx.method.sharedClass.name;
-                var cachExpire = ctx.req.query.cache;
+                var cachExpire = ctx.req.query.cache||ctx.req.body.cache;
 
                 // set key name
                 var cache_key = modelName+'_'+new Buffer(JSON.stringify(ctx.req.query)).toString('base64');
@@ -63,7 +63,7 @@ module.exports = function(Model, options) {
         if((ctx.method.name.indexOf("find") !== -1 || ctx.method.name.indexOf("__get") !== -1) && client.connected){
             if(typeof ctx.req.query.cache != 'undefined'||typeof ctx.req.body.cache != 'undefined'){
                 var modelName = ctx.method.sharedClass.name;
-                var cachExpire = ctx.req.query.cache;
+                var cachExpire = ctx.req.query.cache||ctx.req.body.cache;
                 
                 // set key name
                 var cache_key = modelName+'_'+new Buffer(JSON.stringify(ctx.req.query)).toString('base64');
@@ -95,7 +95,7 @@ module.exports = function(Model, options) {
         // delete cache on patchOrCreate, create, delete, update, destroy, upsert
         if((ctx.method.name.indexOf("find") == -1 && ctx.method.name.indexOf("__get") == -1) && client.connected){
             var modelName = ctx.method.sharedClass.name;
-            var cachExpire = ctx.req.query.cache;
+            var cachExpire = ctx.req.query.cache||ctx.req.body.cache;
             
             // set key name
             var cache_key = modelName+'_*';
